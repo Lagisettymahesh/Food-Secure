@@ -2,48 +2,40 @@
 
 A full-stack web application for connecting food donors with NGOs and volunteers to reduce food waste and help those in need.
 
-## 🚀 Features
+## 🚀 Quick Start
 
-- **Donor Portal** - Donate surplus food with location and pickup details
-- **NGO Dashboard** - Claim and manage food donations
-- **Volunteer System** - Real-time notifications and delivery tracking
-- **Admin Panel** - Analytics, user management, and system oversight
-- **Dark Mode** - Toggle between light and dark themes
-- **Real-time Updates** - Socket.io for live donation status
+### Option 1: One-Click Run (Windows)
+Double-click `start.bat` to install dependencies and run automatically.
 
-## 🛠️ Tech Stack
-
-- **Frontend**: React 19, Tailwind CSS v4, Vite
-- **Backend**: Express.js, Prisma ORM, JWT Auth
-- **Database**: SQLite (dev) / PostgreSQL (prod)
-- **Real-time**: Socket.io
-- **ML Service**: Python (optional food freshness prediction)
-
-## 📦 Installation
-
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Backend Setup
+### Option 2: One-Click Run (Mac/Linux)
 ```bash
+chmod +x start.sh
+./start.sh
+```
+
+### Option 3: Manual Setup
+
+```bash
+# Backend
 cd backend
 npm install
 npx prisma generate
 npx prisma db push
-node seed.js  # Seed test data
+node seed.js
 node server.js
-```
 
-### Frontend Setup
-```bash
+# Frontend (new terminal)
 cd frontend
 npm install
 npm run dev
 ```
 
-## 🔐 Test Accounts
+## 🌐 URLs
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5002
+- API: http://localhost:5002/api
 
+## 🔐 Test Accounts
 | Role | Email | Password |
 |------|-------|----------|
 | Donor | hello@downtowncafe.com | password123 |
@@ -51,31 +43,49 @@ npm run dev
 | Volunteer | sarah.volunteers@email.com | password123 |
 | Admin | admin@foodsecure.com | password123 |
 
-## 🌐 URLs
+## 🛠️ Tech Stack
+- **Frontend**: React 19, Tailwind CSS v4, Vite
+- **Backend**: Express.js, Prisma ORM, JWT Auth
+- **Database**: SQLite (dev) / PostgreSQL (prod)
+- **Real-time**: Socket.io
 
-- Frontend: http://localhost:5173
-- Backend: http://localhost:5002
-- API: http://localhost:5002/api
+## 📦 Installation on New Computer
 
-## 🐳 Docker (Optional)
+1. **Clone the repository:**
+```bash
+git clone https://github.com/Lagisettymahesh/Food-Secure.git
+cd Food-Secure
+```
 
+2. **Run the startup script:**
+   - Windows: Double-click `start.bat`
+   - Mac/Linux: Run `./start.sh`
+
+3. **Open browser:** http://localhost:5173
+
+## 🐳 Docker Setup (Optional)
 ```bash
 docker-compose up --build
 ```
 
 ## 📁 Project Structure
+```
+Food-Secure/
+├── start.bat          # Windows startup
+├── start.sh           # Mac/Linux startup
+├── backend/           # Express API
+│   ├── controllers/
+│   ├── routes/
+│   └── prisma/
+├── frontend/          # React app
+│   ├── src/
+│   └── public/
+└── ml_service/        # Python ML
+```
 
-```
-food/
-├── frontend/          # React frontend
-├── backend/          # Express API
-│   ├── controllers/  # Route handlers
-│   ├── routes/       # API routes
-│   ├── prisma/       # Database schema
-│   └── middleware/   # Auth middleware
-└── ml_service/       # Python ML service
-```
+## ✅ Requirements
+- Node.js 18 or higher
+- npm or yarn
 
 ## 📄 License
-
 MIT

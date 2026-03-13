@@ -1,48 +1,30 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgis/postgis:15-3.3
-    environment:
-      POSTGRES_USER: foodrescue
-      POSTGRES_PASSWORD: password123
-      POSTGRES_DB: foodrescue_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U foodrescue -d foodrescue_db"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
-  ml_service:
-    build: ./ml_service
-    ports:
-      - "8000:8000"
-    environment:
-      - REDIS_URL=redis://redis:6379
-
   backend:
     build: ./backend
     ports:
       - "5002:5002"
     environment:
-      - DATABASE_URL=postgresql://foodrescue:password123@db:5432/foodrescue_db?schema=public
+      - DATABASE_URL=file:/app/prisma/dev.db
       - JWT_SECRET=super_secret_production_key_123
       - CORS_ORIGIN=http://localhost:5173
       - PORT=5002
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
+    volumes:
+      - ./backend/prisma:/app/prisma
+    working_dir: /app
 
-volumes:
-  postgres_data:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:5002/api/v1
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  ml_service:
+    build: ./ml_service
+    ports:
+      - "8000:8000"
